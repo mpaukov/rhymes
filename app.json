@@ -2,7 +2,7 @@
   "expo": {
     "owner": "mpaukov",
     "name": "rhymes",
-    "slug": "phymes",
+    "slug": "rhymes",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -23,14 +23,14 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.mpaukov.phymes"
+      "package": "com.mpaukov.rhymes"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "extra": {
       "eas": {
-        "projectId": "554e5220-b899-4f7d-bd38-64b134628a08"
+        "projectId": "5775d0a1-9b25-4de6-8e95-6cf3808b7f52"
       }
     }
   }
