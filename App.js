@@ -1,38 +1,64 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { useEffect, useState } from "react";
+import { StyleSheet, SafeAreaView, FlatList, View, Text } from "react-native";
 import axios from "axios";
+import { API_KEY, DB_URL } from "@env";
 
-//Q0MvyX1PMWVSzIpnF2ijiOszTcQgtUx8tHjHAiCk05RuYCiluzEy9450I1bO1exV
+axios.defaults.headers.common["api-key"] = API_KEY;
 
-axios.defaults.headers.common["api-key"] =
-  "Q0MvyX1PMWVSzIpnF2ijiOszTcQgtUx8tHjHAiCk05RuYCiluzEy9450I1bO1exV";
+const response = async () => {
+  return await axios({
+    method: "post",
+    url: `${DB_URL}/action/find`,
+
+    data: {
+      collection: "rhymes",
+      database: "books",
+      dataSource: "Cluster0",
+      filter: { author: "Агния Барто" },
+    },
+  }).then((res) => res.data.documents);
+};
 
 export default function App() {
-  const response = async () => {
-    return await axios({
-      method: "post",
-      url: "https://eu-central-1.aws.data.mongodb-api.com/app/data-bmyij/endpoint/data/v1/action/findOne",
-      data: {
-        collection: "rhymes",
-        database: "books",
-        dataSource: "Cluster0",
-      },
-    }).then((res) => res.data.document.text);
-  };
+  const [data, setData] = useState([]);
 
-  return (
-    <View style={styles.container}>
-      <Text>test</Text>
-      <StatusBar style="auto" />
+  useEffect(() => {
+    (async () => await response().then((data) => setData(data)))();
+  }, []);
+
+  const Item = ({ title, text }) => (
+    <View style={styles.item}>
+      <Text style={styles.title}>{title}</Text>
+      <Text style={styles.text}>{text}</Text>
     </View>
+  );
+  return (
+    <SafeAreaView style={styles.container}>
+      <FlatList
+        data={data}
+        renderItem={({ item }) => <Item title={item.title} text={item.text} />}
+        keyExtractor={(_, idx) => idx}
+      />
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+    marginTop: StatusBar.currentHeight || 0,
+  },
+  item: {
+    backgroundColor: "#f9c2ff",
+    padding: 20,
+    marginVertical: 8,
+    marginHorizontal: 16,
+  },
+  title: {
+    fontSize: 32,
+  },
+  text: {
+    fontSize: 24,
   },
 });
