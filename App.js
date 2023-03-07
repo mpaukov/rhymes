@@ -24,7 +24,10 @@ export default function App() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    (async () => await response().then((data) => setData(data)))();
+    (async () =>
+      await response().then((data) =>
+        setData(data.sort((a, b) => a.text.length - b.text.length))
+      ))();
   }, []);
 
   const Item = ({ title, text }) => (
