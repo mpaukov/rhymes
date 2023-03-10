@@ -9,38 +9,52 @@ import {
   FlatList,
 } from "react-native";
 import { Audio } from "expo-av";
-import axios from "axios";
-import { API_KEY, DB_URL } from "@env";
-
-axios.defaults.headers.common["api-key"] = API_KEY;
+import { instanceAxios, config } from "../utils/instanceAxios";
 
 const response = async () => {
-  return await axios({
-    method: "post",
-    url: `${DB_URL}/action/find`,
-
-    data: {
-      collection: "audio",
-      database: "books",
-      dataSource: "Cluster0",
-    },
+  return await instanceAxios({
+    ...config,
+    data: { ...config.data, collection: "audio" },
   }).then((res) => res.data.documents);
 };
 
+(async () => {
+  await Audio.setAudioModeAsync({
+    allowsRecordingIOS: false,
+    playsInSilentModeIOS: true,
+    shouldDuckAndroid: true,
+    staysActiveInBackground: true,
+    playThroughEarpieceAndroid: true,
+  });
+})();
+
 export default function AudioScreen() {
-  const [data, setData] = useState([]);
+  const [dataSlowdown, setDataSlowdown] = useState([]);
+  const [dataExercises, setDataExercises] = useState([]);
+
   const [sound, setSound] = useState();
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    (async () => await response().then((data) => setData(data)))();
+    (async () =>
+      await response().then((data) => {
+        setDataSlowdown(() =>
+          data.filter((item) => item.category === "slowdown")
+        );
+        setDataExercises(() =>
+          data.filter((item) => item.category === "exercises")
+        );
+      }))();
   }, []);
 
   async function playSound(url) {
+    setIsLoading(true);
     const { sound } = await Audio.Sound.createAsync({
       uri: url,
     });
     setSound(sound);
     await sound.playAsync();
+    setIsLoading(false);
   }
 
   useEffect(() => {
@@ -62,31 +76,44 @@ export default function AudioScreen() {
     </View>
   );
 
-  return (
-    <SafeAreaView style={styles.container}>
-      <Text style={styles.mainTitle}>Плейлист для замедления</Text>
-      <FlatList
-        data={data}
-        renderItem={({ item }) => (
-          <Item title={item.title} source={item.source} />
-        )}
-        keyExtractor={(_, idx) => idx}
-      />
-    </SafeAreaView>
-  );
+  if (!isLoading) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <Text style={styles.mainTitle}>Плейлист для замедления</Text>
+        <FlatList
+          data={dataSlowdown}
+          renderItem={({ item }) => (
+            <Item title={item.title} source={item.source} />
+          )}
+          keyExtractor={(_, idx) => idx}
+        />
+        <Text style={styles.mainTitle}>Плейлист для занятий</Text>
+        <FlatList
+          data={dataExercises}
+          renderItem={({ item }) => (
+            <Item title={item.title} source={item.source} />
+          )}
+          keyExtractor={(_, idx) => idx}
+        />
+      </SafeAreaView>
+    );
+  } else {
+    return (
+      <View style={styles.loading}>
+        <Text style={styles.mainTitle}>Загрузка мелодии</Text>
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: StatusBar.currentHeight || 40,
+    marginTop: StatusBar.currentHeight || 30,
   },
   item: {
-    backgroundColor: "#f9c2ff",
-    padding: 20,
-    marginVertical: 8,
+    marginVertical: 5,
     marginHorizontal: 16,
-    borderRadius: 10,
   },
   mainTitle: {
     fontSize: 32,
@@ -97,5 +124,11 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 24,
+  },
+  loading: {
+    flex: 1,
+    marginTop: StatusBar.currentHeight || 30,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
