@@ -4,7 +4,9 @@ import { StyleSheet, View, Text } from "react-native";
 export default function MainScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.mainTitle}>Main Screen</Text>
+      <Text style={styles.mainTitle}>
+        Добро пожаловать в наше приложение для деток
+      </Text>
     </View>
   );
 }
@@ -12,7 +14,9 @@ export default function MainScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: StatusBar.currentHeight || 0,
+    justifyContent: "center",
+    marginTop: StatusBar.currentHeight || 30,
+    marginHorizontal: 40,
   },
   mainTitle: {
     fontSize: 32,
