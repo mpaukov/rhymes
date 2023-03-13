@@ -20,15 +20,6 @@ export default function App() {
         <Tab.Screen
           options={{
             tabBarIcon: ({ focused, color, size }) => (
-              <Ionicons name="person" size={size} color={color} />
-            ),
-          }}
-          name="Main"
-          component={MainScreen}
-        />
-        <Tab.Screen
-          options={{
-            tabBarIcon: ({ focused, color, size }) => (
               <Entypo name="open-book" size={size} color={color} />
             ),
           }}

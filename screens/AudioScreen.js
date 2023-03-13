@@ -109,7 +109,7 @@ export default function AudioScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: StatusBar.currentHeight || 30,
+    marginTop: StatusBar.currentHeight || 25,
   },
   item: {
     marginVertical: 5,
