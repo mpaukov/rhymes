@@ -18,16 +18,6 @@ const response = async () => {
   }).then((res) => res.data.documents);
 };
 
-(async () => {
-  await Audio.setAudioModeAsync({
-    allowsRecordingIOS: false,
-    playsInSilentModeIOS: true,
-    shouldDuckAndroid: true,
-    staysActiveInBackground: true,
-    playThroughEarpieceAndroid: true,
-  });
-})();
-
 export default function AudioScreen() {
   const [dataSlowdown, setDataSlowdown] = useState([]);
   const [dataExercises, setDataExercises] = useState([]);
@@ -36,6 +26,16 @@ export default function AudioScreen() {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    (async () => {
+      await Audio.setAudioModeAsync({
+        allowsRecordingIOS: false,
+        playsInSilentModeIOS: true,
+        shouldDuckAndroid: true,
+        staysActiveInBackground: true,
+        playThroughEarpieceAndroid: true,
+      });
+    })();
+
     (async () =>
       await response().then((data) => {
         setDataSlowdown(() =>
@@ -45,6 +45,14 @@ export default function AudioScreen() {
           data.filter((item) => item.category === "exercises")
         );
       }))();
+
+    return () => {
+      return sound
+        ? () => {
+            sound.unloadAsync();
+          }
+        : undefined;
+    };
   }, []);
 
   async function playSound(url) {
@@ -109,7 +117,7 @@ export default function AudioScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: StatusBar.currentHeight || 25,
+    marginTop: StatusBar.currentHeight || 30,
   },
   item: {
     marginVertical: 5,

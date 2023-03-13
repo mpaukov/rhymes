@@ -45,10 +45,10 @@ export default function RhymesScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: StatusBar.currentHeight || 25,
+    marginTop: StatusBar.currentHeight || 30,
   },
   item: {
-    backgroundColor: "#00ffff",
+    backgroundColor: "#6495ed",
     padding: 20,
     marginVertical: 8,
     marginHorizontal: 16,

@@ -1,8 +1,7 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Ionicons, Entypo, MaterialIcons } from "@expo/vector-icons";
-import MainScreen from "./screens/MainScreen";
+import { Entypo, MaterialIcons } from "@expo/vector-icons";
 import NurseryRhymesScreen from "./screens/NurseryRhymesScreen";
 import RhymesScreen from "./screens/RhymesScreen";
 import AudioScreen from "./screens/AudioScreen";
