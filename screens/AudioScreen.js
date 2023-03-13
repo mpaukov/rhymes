@@ -47,11 +47,7 @@ export default function AudioScreen() {
       }))();
 
     return () => {
-      return sound
-        ? () => {
-            sound.unloadAsync();
-          }
-        : undefined;
+      if (sound) () => sound.unloadAsync();
     };
   }, []);
 
