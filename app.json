@@ -3,8 +3,7 @@
     "owner": "mpaukov",
     "name": "rhymes",
     "slug": "rhymes",
-    "version": "1.0.1",
-    "android.versionCode" :"1.0.1",
+    "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -24,7 +23,8 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.mpaukov.rhymes"
+      "package": "com.mpaukov.rhymes",
+      "versionCode" :"1.0.2"
     },
     "web": {
       "favicon": "./assets/favicon.png"
