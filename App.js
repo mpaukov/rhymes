@@ -1,13 +1,12 @@
 import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Entypo, MaterialIcons } from "@expo/vector-icons";
 import NurseryRhymesScreen from "./screens/NurseryRhymesScreen";
 import RhymesScreen from "./screens/RhymesScreen";
 import NurseryRhymesExercisesScreen from "./screens/NurseryRhymesExercisesScreen";
+import AudioScreen from "./screens/AudioScreen";
 
 const Tab = createBottomTabNavigator();
-const Stack = createStackNavigator();
 
 export default function App() {
   return (
@@ -45,6 +44,15 @@ export default function App() {
           }}
           name="Rhymes"
           component={RhymesScreen}
+        />
+        <Tab.Screen
+          options={{
+            tabBarIcon: ({ focused, color, size }) => (
+              <MaterialIcons name="audiotrack" size={size} color={color} />
+            ),
+          }}
+          name="Audio"
+          component={AudioScreen}
         />
       </Tab.Navigator>
     </NavigationContainer>
