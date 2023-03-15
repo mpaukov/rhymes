@@ -45,7 +45,7 @@ export default function RhymesScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: StatusBar.currentHeight || 30,
+    marginTop: StatusBar.currentHeight || 20,
   },
   item: {
     backgroundColor: "#e0ffff",
@@ -55,13 +55,16 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   mainTitle: {
+    color: "#000000",
     fontSize: 32,
     textAlign: "center",
   },
   title: {
+    color: "#000000",
     fontSize: 32,
   },
   text: {
+    color: "#000000",
     fontSize: 24,
   },
 });

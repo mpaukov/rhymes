@@ -28,11 +28,8 @@ export default function AudioScreen() {
   useEffect(() => {
     (async () => {
       await Audio.setAudioModeAsync({
-        allowsRecordingIOS: false,
-        playsInSilentModeIOS: true,
         shouldDuckAndroid: true,
         staysActiveInBackground: true,
-        playThroughEarpieceAndroid: true,
       });
     })();
 
@@ -86,7 +83,7 @@ export default function AudioScreen() {
   if (!isLoading) {
     return (
       <SafeAreaView style={styles.container}>
-        <Text style={styles.mainTitle}>Плейлист для замедления</Text>
+        <Text style={styles.mainTitle}>Для замедления</Text>
         <FlatList
           data={dataSlowdown}
           renderItem={({ item }) => (
@@ -94,7 +91,7 @@ export default function AudioScreen() {
           )}
           keyExtractor={(_, idx) => idx}
         />
-        <Text style={styles.mainTitle}>Плейлист для занятий</Text>
+        <Text style={styles.mainTitle}>Для занятий</Text>
         <FlatList
           data={dataExercises}
           renderItem={({ item }) => (
@@ -116,21 +113,16 @@ export default function AudioScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: StatusBar.currentHeight || 30,
+    marginTop: StatusBar.currentHeight || 20,
   },
   item: {
     marginVertical: 5,
     marginHorizontal: 16,
   },
   mainTitle: {
+    color: "#000000",
     fontSize: 32,
     textAlign: "center",
-  },
-  title: {
-    fontSize: 32,
-  },
-  text: {
-    fontSize: 24,
   },
   loading: {
     flex: 1,

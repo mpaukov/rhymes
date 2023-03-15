@@ -43,7 +43,7 @@ export default function NurseryRhymesExercisesScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: StatusBar.currentHeight || 30,
+    marginTop: StatusBar.currentHeight || 20,
   },
   item: {
     backgroundColor: "#f0f8ff",
@@ -53,13 +53,16 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   mainTitle: {
+    color: "#000000",
     fontSize: 32,
     textAlign: "center",
   },
   title: {
+    color: "#000000",
     fontSize: 32,
   },
   text: {
+    color: "#000000",
     fontSize: 24,
   },
 });
