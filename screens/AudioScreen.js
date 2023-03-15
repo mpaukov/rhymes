@@ -28,8 +28,10 @@ export default function AudioScreen() {
   useEffect(() => {
     (async () => {
       await Audio.setAudioModeAsync({
+
         shouldDuckAndroid: true,
         staysActiveInBackground: true,
+
       });
     })();
 
