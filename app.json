@@ -3,9 +3,9 @@
     "owner": "mpaukov",
     "name": "rhymes",
     "slug": "rhymes",
-    "version": "1.0.0",
+    "version": "1.0.3",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/rhymes_512.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
@@ -23,7 +23,8 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.mpaukov.rhymes"
+      "package": "com.mpaukov.rhymes",
+      "versionCode": 3
     },
     "web": {
       "favicon": "./assets/favicon.png"

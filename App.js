@@ -1,15 +1,12 @@
 import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Ionicons, Entypo, MaterialIcons } from "@expo/vector-icons";
-import MainScreen from "./screens/MainScreen";
+import { Entypo, MaterialIcons } from "@expo/vector-icons";
 import NurseryRhymesScreen from "./screens/NurseryRhymesScreen";
 import RhymesScreen from "./screens/RhymesScreen";
-import AudioScreen from "./screens/AudioScreen";
 import NurseryRhymesExercisesScreen from "./screens/NurseryRhymesExercisesScreen";
+import AudioScreen from "./screens/AudioScreen";
 
 const Tab = createBottomTabNavigator();
-const Stack = createStackNavigator();
 
 export default function App() {
   return (
@@ -17,15 +14,6 @@ export default function App() {
       <Tab.Navigator
         screenOptions={{ tabBarShowLabel: false, headerShown: false }}
       >
-        <Tab.Screen
-          options={{
-            tabBarIcon: ({ focused, color, size }) => (
-              <Ionicons name="person" size={size} color={color} />
-            ),
-          }}
-          name="Main"
-          component={MainScreen}
-        />
         <Tab.Screen
           options={{
             tabBarIcon: ({ focused, color, size }) => (
