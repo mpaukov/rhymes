@@ -27,7 +27,7 @@
       "versionCode": 4
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/rhymes_512.png"
     },
     "extra": {
       "eas": {

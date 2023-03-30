@@ -32,13 +32,6 @@ export default function ExercisesScreen() {
       await response().then((data) => {
         setData(data);
       }))();
-
-    return () => {
-      if (sound)
-        () => {
-          sound.unloadAsync();
-        };
-    };
   }, []);
 
   async function playSound(url) {
