@@ -4,7 +4,7 @@ import { Entypo, MaterialIcons } from "@expo/vector-icons";
 import NurseryRhymesScreen from "./screens/NurseryRhymesScreen";
 import RhymesScreen from "./screens/RhymesScreen";
 import NurseryRhymesExercisesScreen from "./screens/NurseryRhymesExercisesScreen";
-import AudioScreen from "./screens/AudioScreen";
+import AudioScreen from "./screens/audio/AudioScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -13,6 +13,7 @@ export default function App() {
     <NavigationContainer>
       <Tab.Navigator
         screenOptions={{ tabBarShowLabel: false, headerShown: false }}
+        initialRouteName={"Audio"}
       >
         <Tab.Screen
           options={{

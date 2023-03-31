@@ -9,48 +9,28 @@ import {
   FlatList,
 } from "react-native";
 import { Audio } from "expo-av";
-import { instanceAxios, config } from "../utils/instanceAxios";
+import { instanceAxios, config } from "../../utils/instanceAxios";
 
 const response = async () => {
   return await instanceAxios({
     ...config,
-    data: { ...config.data, collection: "audio" },
+    data: {
+      ...config.data,
+      collection: "audio",
+      filter: { category: "slowdown" },
+    },
   }).then((res) => res.data.documents);
 };
 
-export default function AudioScreen() {
-  const [dataSlowdown, setDataSlowdown] = useState([]);
-  const [dataExercises, setDataExercises] = useState([]);
-
-  const [sound, setSound] = useState();
+export default function SlowdownScreen({ sound, setSound }) {
+  const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    (async () => {
-      await Audio.setAudioModeAsync({
-
-        shouldDuckAndroid: true,
-        staysActiveInBackground: true,
-
-      });
-    })();
-
     (async () =>
       await response().then((data) => {
-        setDataSlowdown(() =>
-          data.filter((item) => item.category === "slowdown")
-        );
-        setDataExercises(() =>
-          data.filter((item) => item.category === "exercises")
-        );
+        setData(data);
       }))();
-
-    return () => {
-      if (sound)
-        () => {
-          sound.unloadAsync();
-        };
-    };
   }, []);
 
   async function playSound(url) {
@@ -87,15 +67,7 @@ export default function AudioScreen() {
       <SafeAreaView style={styles.container}>
         <Text style={styles.mainTitle}>Для замедления</Text>
         <FlatList
-          data={dataSlowdown}
-          renderItem={({ item }) => (
-            <Item title={item.title} source={item.source} />
-          )}
-          keyExtractor={(_, idx) => idx}
-        />
-        <Text style={styles.mainTitle}>Для занятий</Text>
-        <FlatList
-          data={dataExercises}
+          data={data}
           renderItem={({ item }) => (
             <Item title={item.title} source={item.source} />
           )}
