@@ -22,9 +22,8 @@ const response = async () => {
   }).then((res) => res.data.documents);
 };
 
-export default function SlowdownScreen() {
+export default function SlowdownScreen({ sound, setSound }) {
   const [data, setData] = useState([]);
-  const [sound, setSound] = useState();
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {

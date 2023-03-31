@@ -3,6 +3,7 @@ import { MaterialCommunityIcons, Entypo } from "@expo/vector-icons";
 import { Audio } from "expo-av";
 import SlowdownScreen from "./SlowdownScreen";
 import ExercisesScreen from "./ExercisesScreen";
+import { useState } from "react";
 
 const AudioTab = createBottomTabNavigator();
 
@@ -14,6 +15,14 @@ const AudioTab = createBottomTabNavigator();
 })();
 
 export default function AudioScreen() {
+  const [sound, setSound] = useState();
+  const Exercises = (props) => (
+    <ExercisesScreen sound={sound} setSound={setSound} {...props} />
+  );
+  const Slowdown = (props) => (
+    <SlowdownScreen sound={sound} setSound={setSound} {...props} />
+  );
+
   return (
     <AudioTab.Navigator
       screenOptions={{ tabBarShowLabel: false, headerShown: false }}
@@ -29,7 +38,7 @@ export default function AudioScreen() {
           ),
         }}
         name="Slowdown"
-        component={SlowdownScreen}
+        component={Slowdown}
       />
       <AudioTab.Screen
         options={{
@@ -38,7 +47,7 @@ export default function AudioScreen() {
           ),
         }}
         name="Exercises"
-        component={ExercisesScreen}
+        component={Exercises}
       />
     </AudioTab.Navigator>
   );

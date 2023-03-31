@@ -22,9 +22,8 @@ const response = async () => {
   }).then((res) => res.data.documents);
 };
 
-export default function ExercisesScreen() {
+export default function ExercisesScreen({ sound, setSound }) {
   const [data, setData] = useState([]);
-  const [sound, setSound] = useState();
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
