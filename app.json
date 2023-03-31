@@ -3,7 +3,7 @@
     "owner": "mpaukov",
     "name": "rhymes",
     "slug": "rhymes",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "orientation": "portrait",
     "icon": "./assets/rhymes_512.png",
     "userInterfaceStyle": "light",
@@ -24,10 +24,10 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.mpaukov.rhymes",
-      "versionCode": 4
+      "versionCode": 5
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/rhymes_512.png"
     },
     "extra": {
       "eas": {
