@@ -1,14 +1,14 @@
 {
   "expo": {
     "owner": "mpaukov",
-    "name": "rhymes",
-    "slug": "rhymes",
-    "version": "1.0.5",
+    "name": "Rhymes",
+    "slug": "Rhymes",
+    "version": "1.0.6",
     "orientation": "portrait",
     "icon": "./assets/rhymes_512.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/rhymes_512.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -20,11 +20,11 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/rhymes_512.png",
+        "foregroundImage": "./assets/rhymes_icon_512.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.mpaukov.rhymes",
-      "versionCode": 5
+      "versionCode": 6
     },
     "web": {
       "favicon": "./assets/rhymes_512.png"
