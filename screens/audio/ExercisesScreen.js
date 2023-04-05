@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { Audio } from "expo-av";
 import { instanceAxios, config } from "../../utils/instanceAxios";
+import LoadingScreen from "../LoadingScreen";
 
 const response = async () => {
   return await instanceAxios({
@@ -27,10 +28,13 @@ export default function ExercisesScreen({ sound, setSound }) {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    (async () =>
+    (async () => {
+      setIsLoading(true);
       await response().then((data) => {
         setData(data);
-      }))();
+      });
+      setIsLoading(false);
+    })();
   }, []);
 
   async function playSound(url) {
@@ -75,19 +79,13 @@ export default function ExercisesScreen({ sound, setSound }) {
         />
       </SafeAreaView>
     );
-  } else {
-    return (
-      <View style={styles.loading}>
-        <Text style={styles.mainTitle}>Загрузка мелодии</Text>
-      </View>
-    );
-  }
+  } else return <LoadingScreen />;
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: StatusBar.currentHeight || 20,
+    marginTop: StatusBar.currentHeight || 10,
   },
   item: {
     marginVertical: 5,
@@ -97,11 +95,5 @@ const styles = StyleSheet.create({
     color: "#000000",
     fontSize: 32,
     textAlign: "center",
-  },
-  loading: {
-    flex: 1,
-    marginTop: StatusBar.currentHeight || 30,
-    justifyContent: "center",
-    alignItems: "center",
   },
 });

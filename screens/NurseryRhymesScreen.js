@@ -49,7 +49,7 @@ export default function NurseryRhymesScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: StatusBar.currentHeight || 20,
+    marginTop: StatusBar.currentHeight || 10,
   },
   item: {
     backgroundColor: "#f0ffff",

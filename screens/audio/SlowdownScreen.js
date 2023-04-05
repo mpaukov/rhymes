@@ -10,6 +10,8 @@ import {
 } from "react-native";
 import { Audio } from "expo-av";
 import { instanceAxios, config } from "../../utils/instanceAxios";
+import LoadingScreen from "../LoadingScreen";
+import Player from "../../components/Player";
 
 const response = async () => {
   return await instanceAxios({
@@ -22,41 +24,35 @@ const response = async () => {
   }).then((res) => res.data.documents);
 };
 
-export default function SlowdownScreen({ sound, setSound }) {
+export default function SlowdownScreen() {
   const [data, setData] = useState([]);
+  const [playlist, setPlaylist] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    (async () =>
+    (async () => {
+      setIsLoading(true);
       await response().then((data) => {
         setData(data);
-      }))();
+      });
+      setIsLoading(false);
+    })();
   }, []);
 
-  async function playSound(url) {
-    setIsLoading(true);
-    const { sound } = await Audio.Sound.createAsync({
-      uri: url,
+  async function chooseSound(id) {
+    const index = data.findIndex((item) => item._id === id);
+    setPlaylist((prev) => {
+      if (playlist.includes(data[index].source)) return prev;
+      else return [...prev, data[index].source];
     });
-    setSound(sound);
-    await sound.playAsync();
-    setIsLoading(false);
   }
 
-  useEffect(() => {
-    return sound
-      ? () => {
-          sound.unloadAsync();
-        }
-      : undefined;
-  }, [sound]);
-
-  const Item = ({ title, source }) => (
+  const Item = ({ title, id }) => (
     <View style={styles.item}>
       <Button
         title={title}
         onPress={() => {
-          playSound(source);
+          chooseSound(id);
         }}
       />
     </View>
@@ -68,26 +64,19 @@ export default function SlowdownScreen({ sound, setSound }) {
         <Text style={styles.mainTitle}>Для замедления</Text>
         <FlatList
           data={data}
-          renderItem={({ item }) => (
-            <Item title={item.title} source={item.source} />
-          )}
+          renderItem={({ item }) => <Item title={item.title} id={item._id} />}
           keyExtractor={(_, idx) => idx}
         />
+        <Player playlist={playlist} />
       </SafeAreaView>
     );
-  } else {
-    return (
-      <View style={styles.loading}>
-        <Text style={styles.mainTitle}>Загрузка мелодии</Text>
-      </View>
-    );
-  }
+  } else return <LoadingScreen />;
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: StatusBar.currentHeight || 20,
+    marginTop: StatusBar.currentHeight || 10,
   },
   item: {
     marginVertical: 5,
@@ -97,11 +86,5 @@ const styles = StyleSheet.create({
     color: "#000000",
     fontSize: 32,
     textAlign: "center",
-  },
-  loading: {
-    flex: 1,
-    marginTop: StatusBar.currentHeight || 30,
-    justifyContent: "center",
-    alignItems: "center",
   },
 });

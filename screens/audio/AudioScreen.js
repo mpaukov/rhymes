@@ -19,9 +19,6 @@ export default function AudioScreen() {
   const Exercises = (props) => (
     <ExercisesScreen sound={sound} setSound={setSound} {...props} />
   );
-  const Slowdown = (props) => (
-    <SlowdownScreen sound={sound} setSound={setSound} {...props} />
-  );
 
   return (
     <AudioTab.Navigator
@@ -38,7 +35,7 @@ export default function AudioScreen() {
           ),
         }}
         name="Slowdown"
-        component={Slowdown}
+        component={SlowdownScreen}
       />
       <AudioTab.Screen
         options={{
