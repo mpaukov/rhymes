@@ -2,6 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
 import { StyleSheet, SafeAreaView, FlatList, View, Text } from "react-native";
 import { instanceAxios, config } from "../utils/instanceAxios";
+import LoadingScreen from "./LoadingScreen";
 
 const response = async () => {
   return await instanceAxios({
@@ -42,12 +43,7 @@ export default function NurseryRhymesScreen() {
         />
       </SafeAreaView>
     );
-  } else
-    return (
-      <View style={styles.loading}>
-        <Text style={styles.mainTitle}>Загрузка...</Text>
-      </View>
-    );
+  } else return <LoadingScreen />;
 }
 
 const styles = StyleSheet.create({
@@ -74,10 +70,5 @@ const styles = StyleSheet.create({
   text: {
     color: "#000000",
     fontSize: 24,
-  },
-  loading: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
   },
 });
