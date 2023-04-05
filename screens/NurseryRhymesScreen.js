@@ -12,12 +12,16 @@ const response = async () => {
 
 export default function NurseryRhymesScreen() {
   const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    (async () =>
+    (async () => {
+      setIsLoading(true);
       await response().then((data) =>
         setData(data.sort((a, b) => a.text.length - b.text.length))
-      ))();
+      );
+      setIsLoading(false);
+    })();
   }, []);
 
   const Item = ({ title, text }) => (
@@ -25,16 +29,25 @@ export default function NurseryRhymesScreen() {
       <Text style={styles.text}>{text}</Text>
     </View>
   );
-  return (
-    <SafeAreaView style={styles.container}>
-      <Text style={styles.mainTitle}>Просыпаемся</Text>
-      <FlatList
-        data={data}
-        renderItem={({ item }) => <Item title={item.title} text={item.text} />}
-        keyExtractor={(_, idx) => idx}
-      />
-    </SafeAreaView>
-  );
+  if (!isLoading) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <Text style={styles.mainTitle}>Просыпаемся</Text>
+        <FlatList
+          data={data}
+          renderItem={({ item }) => (
+            <Item title={item.title} text={item.text} />
+          )}
+          keyExtractor={(_, idx) => idx}
+        />
+      </SafeAreaView>
+    );
+  } else
+    return (
+      <View style={styles.loading}>
+        <Text style={styles.mainTitle}>Загрузка...</Text>
+      </View>
+    );
 }
 
 const styles = StyleSheet.create({
@@ -61,5 +74,10 @@ const styles = StyleSheet.create({
   text: {
     color: "#000000",
     fontSize: 24,
+  },
+  loading: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
