@@ -3,23 +3,28 @@ import { Entypo } from "@expo/vector-icons";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { Audio } from "expo-av";
 
-export default function Player({ playlist }) {
+export default function Player({ playlist, clear }) {
   const [sound, setSound] = useState();
   const [isPaused, setIsPaused] = useState(false);
   const [position, setPosition] = useState(0);
   const [index, setIndex] = useState(0);
-
-  const onPress = () => console.log("playlist", playlist);
-
+  let intervalId;
   async function playSound() {
     if (playlist.length == 0) return;
     if (!isPaused && !sound) {
-      console.log("new sound");
       const { sound } = await Audio.Sound.createAsync({
         uri: playlist[index],
       });
       setSound(sound);
       await sound.playAsync();
+      intervalId = setInterval(() => {
+        (async () => {
+          const status = await sound.getStatusAsync();
+          if (status.positionMillis >= status.playableDurationMillis) {
+            await toNext();
+          }
+        })();
+      }, 1000);
     } else {
       await sound.playFromPositionAsync(position);
       setIsPaused(false);
@@ -33,22 +38,42 @@ export default function Player({ playlist }) {
       await sound.pauseAsync();
       setIsPaused(true);
     } else setIsPaused(false);
+    clearInterval(intervalId);
   }
 
   async function toNext() {
     if (playlist.length == 0) return;
+    setIsPaused(false);
     if (index < playlist.length - 1) setIndex((ind) => ind + 1);
     else setIndex(0);
-    console.log("index", index);
-    console.log("playlist", playlist);
-    console.log("playlist", playlist[index]);
-    setIsPaused(false);
-    if (sound) sound.unloadAsync();
+    if (sound) {
+      await sound.unloadAsync();
+    }
     setSound(undefined);
-    playSound();
+  }
+
+  async function toPrev() {
+    if (playlist.length == 0) return;
+    setIsPaused(false);
+    if (index > 0) setIndex((ind) => ind - 1);
+    else setIndex(playlist.length - 1);
+    if (sound) {
+      await sound.unloadAsync();
+    }
+    setSound(undefined);
+  }
+
+  async function clearPlaylist() {
+    if (playlist.length == 0) return;
+    if (sound) {
+      await sound.unloadAsync();
+    }
+    clear([]);
+    setSound(undefined);
   }
 
   useEffect(() => {
+    if (!sound) playSound();
     return sound
       ? () => {
           sound.unloadAsync();
@@ -58,10 +83,10 @@ export default function Player({ playlist }) {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.button} onPress={onPress}>
+      <TouchableOpacity style={styles.button} onPress={clearPlaylist}>
         <Entypo name="controller-stop" size={24} color="black" />
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={onPress}>
+      <TouchableOpacity style={styles.button} onPress={toPrev}>
         <Entypo name="controller-jump-to-start" size={24} color="black" />
       </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={toNext}>

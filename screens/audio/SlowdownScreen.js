@@ -8,7 +8,6 @@ import {
   SafeAreaView,
   FlatList,
 } from "react-native";
-import { Audio } from "expo-av";
 import { instanceAxios, config } from "../../utils/instanceAxios";
 import LoadingScreen from "../LoadingScreen";
 import Player from "../../components/Player";
@@ -61,13 +60,13 @@ export default function SlowdownScreen() {
   if (!isLoading) {
     return (
       <SafeAreaView style={styles.container}>
-        <Text style={styles.mainTitle}>Для замедления</Text>
+        <Text style={styles.mainTitle}>Мелодии</Text>
         <FlatList
           data={data}
           renderItem={({ item }) => <Item title={item.title} id={item._id} />}
           keyExtractor={(_, idx) => idx}
         />
-        <Player playlist={playlist} />
+        <Player playlist={playlist} clear={setPlaylist} />
       </SafeAreaView>
     );
   } else return <LoadingScreen />;

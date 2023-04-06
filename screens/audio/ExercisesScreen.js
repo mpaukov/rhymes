@@ -8,9 +8,9 @@ import {
   SafeAreaView,
   FlatList,
 } from "react-native";
-import { Audio } from "expo-av";
 import { instanceAxios, config } from "../../utils/instanceAxios";
 import LoadingScreen from "../LoadingScreen";
+import Player from "../../components/Player";
 
 const response = async () => {
   return await instanceAxios({
@@ -23,8 +23,9 @@ const response = async () => {
   }).then((res) => res.data.documents);
 };
 
-export default function ExercisesScreen({ sound, setSound }) {
+export default function ExercisesScreen() {
   const [data, setData] = useState([]);
+  const [playlist, setPlaylist] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -37,30 +38,20 @@ export default function ExercisesScreen({ sound, setSound }) {
     })();
   }, []);
 
-  async function playSound(url) {
-    setIsLoading(true);
-    const { sound } = await Audio.Sound.createAsync({
-      uri: url,
+  async function chooseSound(id) {
+    const index = data.findIndex((item) => item._id === id);
+    setPlaylist((prev) => {
+      if (playlist.includes(data[index].source)) return prev;
+      else return [...prev, data[index].source];
     });
-    setSound(sound);
-    await sound.playAsync();
-    setIsLoading(false);
   }
 
-  useEffect(() => {
-    return sound
-      ? () => {
-          sound.unloadAsync();
-        }
-      : undefined;
-  }, [sound]);
-
-  const Item = ({ title, source }) => (
+  const Item = ({ title, id }) => (
     <View style={styles.item}>
       <Button
         title={title}
         onPress={() => {
-          playSound(source);
+          chooseSound(id);
         }}
       />
     </View>
@@ -69,14 +60,13 @@ export default function ExercisesScreen({ sound, setSound }) {
   if (!isLoading) {
     return (
       <SafeAreaView style={styles.container}>
-        <Text style={styles.mainTitle}>Для занятий</Text>
+        <Text style={styles.mainTitle}>Песенки</Text>
         <FlatList
           data={data}
-          renderItem={({ item }) => (
-            <Item title={item.title} source={item.source} />
-          )}
+          renderItem={({ item }) => <Item title={item.title} id={item._id} />}
           keyExtractor={(_, idx) => idx}
         />
+        <Player playlist={playlist} clear={setPlaylist} />
       </SafeAreaView>
     );
   } else return <LoadingScreen />;
