@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Entypo } from "@expo/vector-icons";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View, Text } from "react-native";
 import { Audio } from "expo-av";
 
 export default function Player({ playlist, clear }) {
@@ -83,27 +83,53 @@ export default function Player({ playlist, clear }) {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.button} onPress={clearPlaylist}>
-        <Entypo name="controller-stop" size={24} color="black" />
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={toPrev}>
-        <Entypo name="controller-jump-to-start" size={24} color="black" />
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={toNext}>
-        <Entypo name="controller-next" size={24} color="black" />
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={pauseSound}>
-        <Entypo name="controller-paus" size={24} color="black" />
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={playSound}>
-        <Entypo name="controller-play" size={24} color="black" />
-      </TouchableOpacity>
+      <View style={styles.textContainer}>
+        <Text style={styles.text}>
+          Предыдущая:
+          {playlist.length >= 0 && index - 1 >= 0 ? index - 1 : index}
+        </Text>
+        <Text style={styles.text}>Играет: {playlist.length >= 0 && index}</Text>
+        <Text style={styles.text}>
+          Следующая:
+          {playlist.length >= 0 && index + 1 <= playlist.length - 1
+            ? index + 1
+            : index}
+        </Text>
+      </View>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity style={styles.button} onPress={clearPlaylist}>
+          <Entypo name="controller-stop" size={24} color="black" />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={toPrev}>
+          <Entypo name="controller-jump-to-start" size={24} color="black" />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={toNext}>
+          <Entypo name="controller-next" size={24} color="black" />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={pauseSound}>
+          <Entypo name="controller-paus" size={24} color="black" />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={playSound}>
+          <Entypo name="controller-play" size={24} color="black" />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    flexDirection: "column",
+  },
+  textContainer: {
+    flexDirection: "column",
+    justifyContent: "space-evenly",
+    paddingHorizontal: 15,
+  },
+  text: {
+    marginVertical: 1,
+  },
+  buttonContainer: {
     flexDirection: "row",
     justifyContent: "space-around",
     paddingHorizontal: 10,
@@ -113,9 +139,5 @@ const styles = StyleSheet.create({
     backgroundColor: "#DDDDDD",
     padding: 10,
     width: 60,
-  },
-  countContainer: {
-    alignItems: "center",
-    padding: 10,
   },
 });

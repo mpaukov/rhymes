@@ -8,36 +8,8 @@ import {
   SafeAreaView,
   FlatList,
 } from "react-native";
-import { instanceAxios, config } from "../../utils/instanceAxios";
-import LoadingScreen from "../LoadingScreen";
-import Player from "../../components/Player";
 
-const response = async () => {
-  return await instanceAxios({
-    ...config,
-    data: {
-      ...config.data,
-      collection: "audio",
-      filter: { category: "exercises" },
-    },
-  }).then((res) => res.data.documents);
-};
-
-export default function ExercisesScreen() {
-  const [data, setData] = useState([]);
-  const [playlist, setPlaylist] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    (async () => {
-      setIsLoading(true);
-      await response().then((data) => {
-        setData(data);
-      });
-      setIsLoading(false);
-    })();
-  }, []);
-
+export default function ExercisesScreen({ data, playlist, setPlaylist }) {
   async function chooseSound(id) {
     const index = data.findIndex((item) => item._id === id);
     setPlaylist((prev) => {
@@ -57,24 +29,21 @@ export default function ExercisesScreen() {
     </View>
   );
 
-  if (!isLoading) {
-    return (
-      <SafeAreaView style={styles.container}>
-        <Text style={styles.mainTitle}>Песенки</Text>
-        <FlatList
-          data={data}
-          renderItem={({ item }) => <Item title={item.title} id={item._id} />}
-          keyExtractor={(_, idx) => idx}
-        />
-        <Player playlist={playlist} clear={setPlaylist} />
-      </SafeAreaView>
-    );
-  } else return <LoadingScreen />;
+  return (
+    <SafeAreaView style={styles.container}>
+      <Text style={styles.mainTitle}>Песенки</Text>
+      <FlatList
+        data={data}
+        renderItem={({ item }) => <Item title={item.title} id={item._id} />}
+        keyExtractor={(_, idx) => idx}
+      />
+    </SafeAreaView>
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 0.8,
     marginTop: StatusBar.currentHeight || 10,
   },
   item: {
