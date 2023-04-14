@@ -7,7 +7,7 @@ import Player from "../../components/Player";
 import { instanceAxios, config } from "../../utils/instanceAxios";
 import LoadingScreen from "../LoadingScreen";
 import SlowdownScreen from "./SlowdownScreen";
-import ExercisesScreen from "./ExercisesScreen";
+import SongsScreen from "./SongsScreen";
 
 const AudioTab = createBottomTabNavigator();
 
@@ -33,7 +33,7 @@ export default function AudioScreen() {
   const [isLoading, setIsLoading] = useState(false);
   const [playlistPlayer, setPlaylistPlayer] = useState([]);
   const [playlistSlowdown, setPlaylistSlowdown] = useState([]);
-  const [playlistExercises, setPlaylistExercises] = useState([]);
+  const [playlistSongs, setPlaylistSongs] = useState([]);
 
   useEffect(() => {
     (async () => {
@@ -46,23 +46,15 @@ export default function AudioScreen() {
         );
         setPlaylistSlowdown(slowdown);
         const exercises = data.filter(
-          ({ category, subCategory }) =>
-            category === "exercises" && subCategory === "full"
+          ({ subCategory }) => subCategory === "full"
         );
-        setPlaylistExercises(exercises);
+        setPlaylistSongs(exercises);
       });
       setIsLoading(false);
     })();
   }, []);
 
-  const Exercises = (props) => (
-    <ExercisesScreen
-      data={playlistExercises}
-      playlist={playlistPlayer}
-      setPlaylist={setPlaylistPlayer}
-      {...props}
-    />
-  );
+  const Songs = (props) => <SongsScreen data={playlistSongs} {...props} />;
   const Slowdown = (props) => (
     <SlowdownScreen
       data={playlistSlowdown}
@@ -83,7 +75,7 @@ export default function AudioScreen() {
           style={styles.navigator}
           screenOptions={{ tabBarShowLabel: false, headerShown: false }}
         >
-          <AudioTab.Screen
+          {/* <AudioTab.Screen
             options={{
               tabBarIcon: ({ focused, color, size }) => (
                 <MaterialCommunityIcons
@@ -95,15 +87,15 @@ export default function AudioScreen() {
             }}
             name="Slowdown"
             component={Slowdown}
-          />
+          /> */}
           <AudioTab.Screen
             options={{
               tabBarIcon: ({ focused, color, size }) => (
                 <Entypo name="battery" size={size} color={color} />
               ),
             }}
-            name="Exercises"
-            component={Exercises}
+            name="Songs"
+            component={Songs}
           />
         </AudioTab.Navigator>
       </View>
