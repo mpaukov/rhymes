@@ -7,32 +7,65 @@ import {
   StyleSheet,
   TouchableOpacity,
   SafeAreaView,
-  FlatList,
+  ScrollView,
 } from "react-native";
 
-export default function SongsScreen({ data }) {
+export default function SongsScreen({ data, setSongs }) {
   const [filter, setFilter] = useState("exercises");
   const [playlist, setPlaylist] = useState([]);
+  let songs = [];
 
   useEffect(() => {
     setPlaylist(() => data.filter(({ category }) => category === filter));
   }, [data, filter]);
 
-  const Item = ({ title, id }) => (
-    <View style={styles.item}>
-      <Text style={styles.itemText}>{title}</Text>
-    </View>
-  );
+  const chooseSong = (id) => {
+    if (!songs.includes(id)) {
+      songs.push(id);
+    } else {
+      songs = songs.filter((item) => item !== id);
+    }
+  };
 
-  const List = () =>
-    playlist.map((item) => (
-      <Item
-        style={styles.items}
-        title={item.title}
-        id={item._id}
-        key={item._id}
-      />
-    ));
+  const List = () => {
+    return (
+      <ScrollView style={styles.items}>
+        {playlist.map((item) => {
+          const [isAdded, setIsAdded] = useState(false);
+          const [changing, setChanging] = useState(false);
+
+          useEffect(() => {
+            if (songs.includes(item._id)) {
+              setIsAdded(true);
+            } else {
+              setIsAdded(false);
+            }
+            setSongs(songs);
+          }, [playlist, changing]);
+
+          return (
+            <View
+              key={item._id}
+              style={{
+                ...styles.item,
+                backgroundColor: isAdded ? "#8a2be2" : "#007aff",
+              }}
+            >
+              <Text
+                style={styles.itemText}
+                onPress={() => {
+                  chooseSong(item._id);
+                  setChanging((prev) => !prev);
+                }}
+              >
+                {item.title}
+              </Text>
+            </View>
+          );
+        })}
+      </ScrollView>
+    );
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -82,6 +115,7 @@ const styles = StyleSheet.create({
   },
   mainWrapper: {
     flexDirection: "column",
+    flex: 0.8,
   },
   button: {
     alignItems: "center",
@@ -103,7 +137,6 @@ const styles = StyleSheet.create({
   item: {
     marginVertical: 5,
     marginHorizontal: 16,
-    backgroundColor: "#007aff",
     borderRadius: 20,
   },
   itemText: {

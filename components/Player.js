@@ -8,6 +8,7 @@ export default function Player({ playlist, clear }) {
   const [isPaused, setIsPaused] = useState(false);
   const [position, setPosition] = useState(0);
   const [index, setIndex] = useState(0);
+
   let intervalId;
   async function playSound() {
     if (playlist.length == 0) return;
@@ -119,9 +120,11 @@ export default function Player({ playlist, clear }) {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     flexDirection: "column",
   },
   textContainer: {
+    flex: 0.5,
     flexDirection: "column",
     justifyContent: "space-evenly",
     paddingHorizontal: 15,
@@ -130,6 +133,7 @@ const styles = StyleSheet.create({
     marginVertical: 1,
   },
   buttonContainer: {
+    flex: 0.5,
     flexDirection: "row",
     justifyContent: "space-around",
     paddingHorizontal: 10,
@@ -139,5 +143,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#DDDDDD",
     padding: 10,
     width: 60,
+    height: 40,
   },
 });
