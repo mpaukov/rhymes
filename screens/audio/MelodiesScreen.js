@@ -10,8 +10,8 @@ import {
   ScrollView,
 } from "react-native";
 
-export default function SongsScreen({ data, refresh, songs }) {
-  const [filter, setFilter] = useState("exercises");
+export default function MelodiesScreen({ data, refresh, songs }) {
+  const [filter, setFilter] = useState("slowdown");
   const [playlist, setPlaylist] = useState([]);
 
   useEffect(() => {
@@ -70,7 +70,7 @@ export default function SongsScreen({ data, refresh, songs }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.mainTitle}>Песенки</Text>
+      <Text style={styles.mainTitle}>Мелодии</Text>
       <View style={styles.mainWrapper}>
         <List />
         <View style={styles.buttonWrapper}>

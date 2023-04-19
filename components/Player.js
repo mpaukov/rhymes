@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Entypo } from "@expo/vector-icons";
 import { StyleSheet, TouchableOpacity, View, Text } from "react-native";
 import { Audio } from "expo-av";
+import { useKeepAwake } from "expo-keep-awake";
 
 export default function Player({ playlist, clear }) {
   const [sound, setSound] = useState();
@@ -9,12 +10,14 @@ export default function Player({ playlist, clear }) {
   const [position, setPosition] = useState(0);
   const [index, setIndex] = useState(0);
 
+  useKeepAwake();
+
   let intervalId;
   async function playSound() {
     if (playlist.length == 0) return;
     if (!isPaused && !sound) {
       const { sound } = await Audio.Sound.createAsync({
-        uri: playlist[index],
+        uri: playlist[index].source,
       });
       setSound(sound);
       await sound.playAsync();
@@ -87,14 +90,18 @@ export default function Player({ playlist, clear }) {
       <View style={styles.textContainer}>
         <Text style={styles.text}>
           Предыдущая:
-          {playlist.length >= 0 && index - 1 >= 0 ? index - 1 : index}
+          {playlist.length >= 0 && index - 1 >= 0
+            ? playlist[index - 1]?.title
+            : playlist[playlist.length - 1]?.title}
         </Text>
-        <Text style={styles.text}>Играет: {playlist.length >= 0 && index}</Text>
+        <Text style={styles.text}>
+          Играет: {playlist.length >= 0 && playlist[index]?.title}
+        </Text>
         <Text style={styles.text}>
           Следующая:
           {playlist.length >= 0 && index + 1 <= playlist.length - 1
-            ? index + 1
-            : index}
+            ? playlist[index + 1]?.title
+            : playlist[0]?.title}
         </Text>
       </View>
       <View style={styles.buttonContainer}>
@@ -124,16 +131,17 @@ const styles = StyleSheet.create({
     flexDirection: "column",
   },
   textContainer: {
-    flex: 0.5,
+    flex: 1,
     flexDirection: "column",
     justifyContent: "space-evenly",
     paddingHorizontal: 15,
+    marginBottom: 1,
   },
   text: {
-    marginVertical: 1,
+    marginBottom: 1,
   },
   buttonContainer: {
-    flex: 0.5,
+    flex: 1,
     flexDirection: "row",
     justifyContent: "space-around",
     paddingHorizontal: 10,
@@ -141,7 +149,7 @@ const styles = StyleSheet.create({
   button: {
     alignItems: "center",
     backgroundColor: "#DDDDDD",
-    padding: 10,
+    justifyContent: "center",
     width: 60,
     height: 40,
   },
