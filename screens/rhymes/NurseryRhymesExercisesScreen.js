@@ -1,8 +1,8 @@
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
 import { StyleSheet, SafeAreaView, FlatList, View, Text } from "react-native";
-import { instanceAxios, config } from "../utils/instanceAxios";
-import LoadingScreen from "./LoadingScreen";
+import { instanceAxios, config } from "../../utils/instanceAxios";
+import LoadingScreen from "../LoadingScreen";
 
 const response = async () => {
   return await instanceAxios({

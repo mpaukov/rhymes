@@ -1,6 +1,6 @@
 import { StyleSheet, View, ActivityIndicator } from "react-native";
 
-export default function RhymesScreen() {
+export default function LoadingScreen() {
   return (
     <View style={styles.loading}>
       <ActivityIndicator size="large" />
