@@ -1,61 +1,45 @@
 import { NavigationContainer } from "@react-navigation/native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Entypo, MaterialIcons } from "@expo/vector-icons";
-import NurseryRhymesScreen from "./screens/rhymes/NurseryRhymesScreen";
+import { createStackNavigator } from "@react-navigation/stack";
+import HomeScreen from "./screens/HomeScreen";
 import MainRhymesScreen from "./screens/rhymes/MainRhymesScreen";
-import NurseryRhymesExercisesScreen from "./screens/rhymes/NurseryRhymesExercisesScreen";
 import AudioScreen from "./screens/audio/AudioScreen";
+import MainNurseryRhymesScreen from "./screens/rhymes/MainNurseryRhymesScreen";
 
-const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Tab.Navigator
-        screenOptions={{ tabBarShowLabel: false, headerShown: false }}
-        initialRouteName={"Audio"}
-      >
-        <Tab.Screen
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
           options={{
-            tabBarIcon: ({ focused, color, size }) => (
-              <Entypo name="open-book" size={size} color={color} />
-            ),
+            headerShown: false,
           }}
+        />
+        <Stack.Screen
           name="Nursery"
-          component={NurseryRhymesScreen}
-        />
-        <Tab.Screen
+          component={MainNurseryRhymesScreen}
           options={{
-            tabBarIcon: ({ focused, color, size }) => (
-              <MaterialIcons
-                name="sports-basketball"
-                size={size}
-                color={color}
-              />
-            ),
+            title: "Потешки",
           }}
-          name="Exercises"
-          component={NurseryRhymesExercisesScreen}
         />
-        <Tab.Screen
-          options={{
-            tabBarIcon: ({ focused, color, size }) => (
-              <Entypo name="book" size={size} color={color} />
-            ),
-          }}
+        <Stack.Screen
           name="Rhymes"
           component={MainRhymesScreen}
-        />
-        <Tab.Screen
           options={{
-            tabBarIcon: ({ focused, color, size }) => (
-              <MaterialIcons name="audiotrack" size={size} color={color} />
-            ),
+            title: "Стихи",
           }}
+        />
+        <Stack.Screen
           name="Audio"
           component={AudioScreen}
+          options={{
+            title: "Музыка",
+          }}
         />
-      </Tab.Navigator>
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }

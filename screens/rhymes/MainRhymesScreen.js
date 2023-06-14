@@ -1,4 +1,3 @@
-import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
 import { StyleSheet, SafeAreaView, Text } from "react-native";
 import { instanceAxios, config } from "../../utils/instanceAxios";
@@ -40,12 +39,11 @@ export default function MainRhymesScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: StatusBar.currentHeight || 10,
   },
 
   mainTitle: {
     color: "#000000",
-    fontSize: 32,
+    fontSize: 24,
     textAlign: "center",
   },
 });

@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { StatusBar } from "expo-status-bar";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import {
   Text,
@@ -107,11 +106,10 @@ export default function MelodiesScreen({ data, refresh, songs }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: StatusBar.currentHeight || 10,
   },
   mainTitle: {
     color: "#000000",
-    fontSize: 32,
+    fontSize: 24,
     textAlign: "center",
   },
   mainWrapper: {
