@@ -19,8 +19,6 @@ const styles = StyleSheet.create({
   item: {
     backgroundColor: "#f0f8ff",
     padding: 20,
-    marginHorizontal: 16,
-    borderRadius: 10,
   },
   mainTitle: {
     color: "#000000",
@@ -34,6 +32,6 @@ const styles = StyleSheet.create({
   text: {
     color: "#000000",
     fontSize: 24,
-    padding: 20,
+    marginBottom: 24,
   },
 });

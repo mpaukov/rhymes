@@ -8,7 +8,7 @@ import AudioScreen from "./screens/audio/AudioScreen";
 
 const Tab = createBottomTabNavigator();
 
-export default function App() {
+export default function App_() {
   return (
     <NavigationContainer>
       <Tab.Navigator

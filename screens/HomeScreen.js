@@ -1,4 +1,3 @@
-import { StatusBar } from "expo-status-bar";
 import { StyleSheet, SafeAreaView, View, Text } from "react-native";
 
 export default function HomeScreen({ navigation }) {
@@ -44,7 +43,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    marginTop: StatusBar.currentHeight || 10,
   },
   mainTitle: {
     color: "#000000",
