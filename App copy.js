@@ -2,8 +2,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Entypo, MaterialIcons } from "@expo/vector-icons";
 import NurseryRhymesScreen from "./screens/rhymes/NurseryRhymesScreen";
-import MainRhymesScreen from "./screens/rhymes/MainRhymesScreen";
-import NurseryRhymesExercisesScreen from "./screens/rhymes/NurseryRhymesExercisesScreen";
+import MainRhymesScreen from "./screens/rhymes/Rhymes/MainRhymesScreen";
+import NurseryRhymesExercisesScreen from "./screens/rhymes/Nursery/NurseryRhymesExercisesScreen";
 import AudioScreen from "./screens/audio/AudioScreen";
 
 const Tab = createBottomTabNavigator();

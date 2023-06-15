@@ -23,17 +23,9 @@ export default function HomeScreen({ navigation }) {
       <View style={styles.item}>
         <Text
           style={styles.itemText}
-          onPress={() => navigation.navigate("Profile")}
+          onPress={() => navigation.navigate("FairyTales")}
         >
           Сказки
-        </Text>
-      </View>
-      <View style={styles.item}>
-        <Text
-          style={styles.itemText}
-          onPress={() => navigation.navigate("Profile")}
-        >
-          Аудио сказки
         </Text>
       </View>
       <View style={styles.item}>

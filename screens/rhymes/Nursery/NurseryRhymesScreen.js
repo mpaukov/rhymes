@@ -1,19 +1,16 @@
 import { useEffect, useState } from "react";
 import { StyleSheet, SafeAreaView, FlatList, View, Text } from "react-native";
-import { instanceAxios, config } from "../../utils/instanceAxios";
-import LoadingScreen from "../LoadingScreen";
+import { instanceAxios, config } from "../../../utils/instanceAxios";
+import LoadingScreen from "../../LoadingScreen";
 
 const response = async () => {
   return await instanceAxios({
     ...config,
-    data: {
-      ...config.data,
-      collection: "exercises",
-    },
+    data: { ...config.data, collection: "nursery" },
   }).then((res) => res.data.documents);
 };
 
-export default function NurseryRhymesExercisesScreen() {
+export default function NurseryRhymesScreen() {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -35,7 +32,7 @@ export default function NurseryRhymesExercisesScreen() {
   if (!isLoading) {
     return (
       <SafeAreaView style={styles.container}>
-        <Text style={styles.mainTitle}>Играем и делаем упражнения</Text>
+        <Text style={styles.mainTitle}>Просыпаемся</Text>
         <FlatList
           data={data}
           renderItem={({ item }) => (
@@ -53,7 +50,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   item: {
-    backgroundColor: "#f0f8ff",
+    backgroundColor: "#f0ffff",
     padding: 20,
     marginVertical: 8,
     marginHorizontal: 16,

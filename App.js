@@ -1,9 +1,11 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import HomeScreen from "./screens/HomeScreen";
-import MainRhymesScreen from "./screens/rhymes/MainRhymesScreen";
+import MainRhymesScreen from "./screens/rhymes/Rhymes/MainRhymesScreen";
 import AudioScreen from "./screens/audio/AudioScreen";
-import MainNurseryRhymesScreen from "./screens/rhymes/MainNurseryRhymesScreen";
+import MainNurseryRhymesScreen from "./screens/rhymes/Nursery/MainNurseryRhymesScreen";
+import MainFairyTales from "./screens/rhymes/FairyTales/MainFairyTales";
+import FairyTale from "./screens/rhymes/FairyTales/FairyTale.js";
 
 const Stack = createStackNavigator();
 
@@ -39,6 +41,21 @@ export default function App() {
             title: "Музыка",
           }}
         />
+        <Stack.Screen
+          name="FairyTales"
+          component={MainFairyTales}
+          options={{
+            title: "Сказки",
+          }}
+        />
+        <Stack.Screen
+          name="FairyTale"
+          options={{
+            title: "Сказки",
+          }}
+        >
+          {(props) => <FairyTale {...props} />}
+        </Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
   );
